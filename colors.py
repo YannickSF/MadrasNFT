@@ -26,6 +26,12 @@ GREY = Color('grey', (98, 142, 147))
 PALETTE = [WHITE, RED, ORANGE, YELLOW, GREEN, BLUE, PURPLE, BLACK]
 
 
+def select_color_by_name(name):
+    for p in PALETTE:
+        if p.name == name:
+            return p
+
+
 def select_color(shade):
     si, color = -1, None
     for p in PALETTE:
@@ -43,7 +49,7 @@ def compute_shades(shade1, shade2):
     if color1 == color2:
         s = s2 if s1 <= s2 else s1
         color = color2 if s2 == s else color1
-        return color.shades[s + 1 if s2 < len(color.shades) - 1 else len(color.shades) - 1]
+        return color.shades[s + 1 if s < len(color.shades) - 1 else len(color.shades) - 1]
     else:
         if color1 == RED and color2 == YELLOW or color2 == RED and color1 == YELLOW:
             return ORANGE.shades[0]
