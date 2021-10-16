@@ -1,0 +1,23 @@
+{
+    "name": "madrasnft_2",
+    "width": 240,
+    "height": 240,
+    "background": "yellow",
+    "palette": [
+        "red",
+        "blue",
+        "yellow",
+        "yellow"
+    ],
+    "generated": {
+        "red.1": 170,
+        "orange.0": 994,
+        "yellow.0": 21060,
+        "yellow.1": 17259,
+        "yellow.2": 3829,
+        "green.0": 12730,
+        "blue.1": 1490,
+        "blue.2": 60,
+        "purple.0": 8
+    }
+}
