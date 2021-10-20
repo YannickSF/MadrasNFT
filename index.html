@@ -2,20 +2,208 @@
     <html lang="fr">
     <head>
         <meta charset="UTF-8">
-        <title>Home</title>
+        <title>Madras NFT</title>
         <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
     </head>
     <body>
-        <div id="app">
-        {{ message }}
+        <nav class="navbar is-warning" role="navigation" aria-label="main navigation">          
+            <div class="navbar-brand">
+                <a class="navbar-item" href="https://bulma.io">
+                <img src="https://bulma.io/images/bulma-logo.png" width="112" height="28">
+                </a>
+            </div>
+            <div id="madrasnav" class="navbar-menu">
+            <div class="navbar-start">
+                <a class="navbar-item">
+                    Madras NFT
+                </a>
+        
+                <a class="navbar-item">
+                    Générateur
+                </a>
+
+                <a class="navbar-item">
+                    Hall Of Fame
+                </a>
+            </div>
+        </nav>
+        <div class="container"></div>
+            <section class="section">
+                <h1 class="title">Le Madras NFT</h1>
+                <h2 class="subtitle">
+                    A simple container to divide your page into <strong>sections</strong>, like the one you're currently reading.
+                </h2>
+            </section>
+
+            <section class="section">
+                <h1 class="title">Générateur</h1>
+                <h2 class="subtitle">
+                    A simple container to divide your page into <strong>sections</strong>, like the one you're currently reading.
+                </h2>
+                <br/>
+                <div class="container" id="generator">
+                    <div class="columns">
+                        <div class="column">
+                            <div class="field">
+                                <label class="label">Nombre de bandes</label>
+                                <div class="control">
+                                <input class="input" type="text" placeholder="Max..8">
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label class="label">Nombres de lignes</label>
+                                <div class="control">
+                                <input class="input" type="text" placeholder="Max..20">
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label class="label">Couleur du fond</label>
+                                <div class="control">
+                                    <div class="select">
+                                        <select v-model="default_color_background">
+                                            <option value="white">white</option>
+                                            <option value="yellow">yellow</option>
+                                            <option value="red">red</option>
+                                            <option value="blue">blue</option>
+                                            <option value="black">black</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="field has-addons">
+                                <div class="control">
+                                  <div class="select">
+                                    <select id="selectedColor" v-model="default_color">
+                                        <option value="yellow">yellow</option>
+                                        <option value="red">red</option>
+                                        <option value="blue">blue</option>
+                                    </select>
+                                  </div>
+                                </div>
+                                <div class="control">
+                                  <button type="submit" v-on:click="addNewColor()" class="button is-primary">Choose</button>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="container">
+                                <ul>
+                                    <li v-for="color in colors" >
+                                        <span class="tag">{{ color }}</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <br/>
+                            <div class="container">
+                                <div class="control">
+                                    <button class="button is-primary">Submit</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="column">
+                            <div class="card">
+                                <div class="card-image">
+                                  <figure class="image is-4by3">
+                                    <img src="https://bulma.io/images/placeholders/1280x960.png" alt="Placeholder image">
+                                  </figure>
+                                </div>
+                                <div class="card-content">
+                                    <div class="content">
+                                      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec iaculis mauris.
+                                      <a href="#">@bulmaio</a>. <a href="#">#css</a> <a href="#">#responsive</a>
+                                      <br>
+                                      <time datetime="2016-1-1">11:09 PM - 1 Jan 2016</time>
+                                    </div>
+                                </div>
+                                <footer class="card-footer">
+                                    <a href="#" class="card-footer-item">Enregistrer</a>
+                                    <a href="#" class="card-footer-item">Épingler</a>
+                                  </footer>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section">
+                <h1 class="title">Hall Of Fame</h1>
+                <h2 class="subtitle">
+                    A simple container to divide your page into <strong>sections</strong>, like the one you're currently reading.
+                </h2>
+                <div id="halloffame">
+                    <div class="columns is-multiline">
+                        <div v-for="elem in favoris" class="column is-one-fifth">
+                            <div class="card">
+                                <div class="card-image">
+                                  <figure class="image is-4by3">
+                                    <img src="https://bulma.io/images/placeholders/1280x960.png" alt="Placeholder image">
+                                  </figure>
+                                </div>
+                                <div class="card-content">
+                                  <div class="media">
+                                    <div class="media-content">
+                                      <p class="title is-4">John Smith</p>
+                                      <p class="subtitle is-6">@johnsmith</p>
+                                    </div>
+                                  </div>
+                              
+                                  <div class="content">
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                                    Phasellus nec iaculis mauris. <a>@bulmaio</a>.
+                                    <a href="#">#css</a> <a href="#">#responsive</a>
+                                    <br>
+                                    <time datetime="2016-1-1">11:09 PM - 1 Jan 2016</time>
+                                  </div>
+                                  <footer class="card-footer">
+                                    <a href="#" class="card-footer-item">Upvote</a>
+                                  </footer>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <footer class="footer">
+                <div class="content has-text-centered">
+                <p>
+                    <strong>Bulma</strong> by <a href="https://jgthms.com">Jeremy Thomas</a>. The source code is licensed
+                    <a href="http://opensource.org/licenses/mit-license.php">MIT</a>. The website content
+                    is licensed <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY NC SA 4.0</a>.
+                </p>
+                </div>
+            </footer>
         </div>
     </body>
     <script>
-        var app = new Vue({
-            el: '#app',
+        var gen = new Vue({
+            el: '#generator',
             data: {
-                message: 'Hello Vue!'
+                default_color_background: 'white',
+                default_color: 'yellow',
+                colors: ['test']
+            },
+            methods: {
+                addNewColor: function () {
+                this.colors.push(document.getElementById('selectedColor').value)
+                },
+
+                generateMadras: function () {
+                    // send payload to genrator => id will be return 
+                    // get png/json from id 
+                }
+
             }
-        })
+        });
+
+        var hof = new Vue({
+            el: '#halloffame',
+            computed: {
+                favoris: function (){
+                    return ['', '', '', '', '', '', '']
+                }
+            }
+        });
     </script>
 </html>
