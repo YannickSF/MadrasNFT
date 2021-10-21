@@ -1,8 +1,11 @@
 
+import os
 from flask import Flask, request, send_file
+from flask_cors import CORS
 from api.methods import generator, get_json, get_png, obj_pin, obj_upvote, wall_of_fame
 
 app = Flask(__name__)
+cors = CORS(app)
 
 
 @app.route("/")
@@ -12,7 +15,10 @@ def index():
 
 @app.route("/generate", methods=['GET'])
 def generate():
-    payload = request.get_json()
+
+    payload = {k: request.values[k] for k in request.values.keys()}
+    payload['colors'] = payload['colors'].split(',')
+
     payload['square_width'] = 240
     payload['square_height'] = 240
 
@@ -27,7 +33,12 @@ def generate():
 
 @app.route("/png/<string:id>", methods=['GET'])
 def png(id):
-    return send_file(get_png(id), mimetype='image/png')
+    return os.path.abspath(get_png(id))
+
+
+@app.route("/save_png/<string:id>", methods=['GET'])
+def save_png(id):
+    return send_file(get_png(id), mimetype='image/png', as_attachment=True)
 
 
 @app.route("/json/<string:id>", methods=['GET'])

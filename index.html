@@ -4,6 +4,7 @@
         <meta charset="UTF-8">
         <title>Madras NFT</title>
         <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
     </head>
     <body>
@@ -46,22 +47,34 @@
                     <div class="columns">
                         <div class="column">
                             <div class="field">
-                                <label class="label">Nombre de bandes</label>
+                                <label class="label">Nombre de bandes verticales</label>
                                 <div class="control">
-                                <input class="input" type="text" placeholder="Max..8">
+                                <input id="nb_bands_vertical" class="input" type="text" placeholder="Max..8">
                                 </div>
                             </div>
                             <div class="field">
-                                <label class="label">Nombres de lignes</label>
+                                <label class="label">Nombre de bandes horizontales</label>
                                 <div class="control">
-                                <input class="input" type="text" placeholder="Max..20">
+                                <input id="nb_bands_horizontal" class="input" type="text" placeholder="Max..8">
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label class="label">Nombres de lignes verticales</label>
+                                <div class="control">
+                                <input id="nb_lines_vertical" class="input" type="text" placeholder="Max..20">
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label class="label">Nombres de lignes horizontales</label>
+                                <div class="control">
+                                <input id="nb_lines_horizontal" class="input" type="text" placeholder="Max..20">
                                 </div>
                             </div>
                             <div class="field">
                                 <label class="label">Couleur du fond</label>
                                 <div class="control">
                                     <div class="select">
-                                        <select v-model="default_color_background">
+                                        <select id="background" v-model="default_color_background">
                                             <option value="white">white</option>
                                             <option value="yellow">yellow</option>
                                             <option value="red">red</option>
@@ -71,6 +84,7 @@
                                     </div>
                                 </div>
                             </div>
+                            <label class="label">Couleurs de bases</label>
                             <div class="field has-addons">
                                 <div class="control">
                                   <div class="select">
@@ -88,7 +102,7 @@
                             <br/>
                             <div class="container">
                                 <ul>
-                                    <li v-for="color in colors" >
+                                    <li v-for="color in base_colors" >
                                         <span class="tag">{{ color }}</span>
                                     </li>
                                 </ul>
@@ -96,7 +110,7 @@
                             <br/>
                             <div class="container">
                                 <div class="control">
-                                    <button class="button is-primary">Submit</button>
+                                    <button type="submit" v-on:click="generate()" class="button is-primary">Submit</button>
                                 </div>
                             </div>
                         </div>
@@ -105,15 +119,12 @@
                             <div class="card">
                                 <div class="card-image">
                                   <figure class="image is-4by3">
-                                    <img src="https://bulma.io/images/placeholders/1280x960.png" alt="Placeholder image">
+                                    <img :src="current_madras_png" alt="Placeholder image">
                                   </figure>
                                 </div>
                                 <div class="card-content">
                                     <div class="content">
-                                      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec iaculis mauris.
-                                      <a href="#">@bulmaio</a>. <a href="#">#css</a> <a href="#">#responsive</a>
-                                      <br>
-                                      <time datetime="2016-1-1">11:09 PM - 1 Jan 2016</time>
+                                        {{ current_madras_data }}
                                     </div>
                                 </div>
                                 <footer class="card-footer">
@@ -147,7 +158,6 @@
                                       <p class="subtitle is-6">@johnsmith</p>
                                     </div>
                                   </div>
-                              
                                   <div class="content">
                                     Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                                     Phasellus nec iaculis mauris. <a>@bulmaio</a>.
@@ -176,23 +186,61 @@
             </footer>
         </div>
     </body>
+
     <script>
         var gen = new Vue({
             el: '#generator',
             data: {
                 default_color_background: 'white',
                 default_color: 'yellow',
-                colors: ['test']
+                base_colors: [],
+                current_madras_id: "",
+                current_madras_png: "https://bulma.io/images/placeholders/1280x960.png",
+                current_madras_data: {}
             },
             methods: {
                 addNewColor: function () {
-                this.colors.push(document.getElementById('selectedColor').value)
+                this.base_colors.push(document.getElementById('selectedColor').value)
                 },
 
-                generateMadras: function () {
-                    // send payload to genrator => id will be return 
-                    // get png/json from id 
+                generate() {
+                const path = 'http://localhost:5000/generate';
+                payload = {
+                    background: document.getElementById("background").value,
+                    vertical_bands: document.getElementById("nb_bands_vertical").value,
+                    horizontal_bands: document.getElementById("nb_bands_horizontal").value,
+                    vertical_lines: document.getElementById("nb_lines_vertical").value,
+                    horizontal_lines: document.getElementById("nb_lines_horizontal").value,
+                    colors: this.base_colors.toString()
                 }
+                axios.get(path, {params: payload})
+                .then((res) => {
+                    this.current_madras_id = res.data.id;
+                    axios.get('http://localhost:5000/png'.concat('/', this.current_madras_id))
+                    .then((respng) => {
+                        this.current_madras_png = respng.data
+                    })
+                    .catch((error) => {
+                    console.error(error);
+                    })
+
+                    axios.get('http://localhost:5000/json'.concat('/', this.current_madras_id))
+                    .then((resjson) => {
+                        this.current_madras_data = resjson.data
+                    })
+                    .catch((error) => {
+                    console.error(error);
+                    })
+                })
+                .catch((error) => {
+                    console.error(error);
+                    });
+                },
+                save_png() {},
+
+                pin() {}, 
+
+                upvote() {}
 
             }
         });
@@ -206,4 +254,5 @@
             }
         });
     </script>
+
 </html>

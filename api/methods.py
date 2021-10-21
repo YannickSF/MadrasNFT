@@ -10,6 +10,11 @@ DB = Table('index')
 
 
 def generator(**kwargs):
+    kwargs['vertical_bands'] = int(kwargs['vertical_bands'])
+    kwargs['horizontal_bands'] = int(kwargs['horizontal_bands'])
+    kwargs['vertical_lines'] = int(kwargs['vertical_lines'])
+    kwargs['horizontal_lines'] = int(kwargs['horizontal_lines'])
+
     def ep():
         return random.choice([i for i in range(2, 40)])
 
@@ -22,11 +27,12 @@ def generator(**kwargs):
     h_lines = [points(kwargs['square_height']) for l in range(kwargs['horizontal_lines'])]
 
     palette = []
-    for key in kwargs.keys():
-        if 'color' in key:
-            palette.append(select_color_by_name(kwargs[key]))
+    for color in kwargs['colors']:
+        palette.append(select_color_by_name(color))
+
     filecount = len([name for name in os.listdir('_collections/')])
     kwargs['name'] = '_collections/madrasnft_{}'.format(filecount)
+
     madras_nft = MadrasNFT(name=kwargs['name'],
                            square_width=kwargs['square_width'], square_height=kwargs['square_height'],
                            background=select_color_by_name(kwargs['background']),
@@ -61,7 +67,7 @@ def get_json(id):
         return None
 
 
-def obj_pin(id, username):
+def sobj_pin(id, username):
     q = Query()
     robj = DB.search(q.id == id)
     if len(robj) == 0:
