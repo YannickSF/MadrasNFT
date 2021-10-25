@@ -15,123 +15,129 @@
                 </a>
             </div>
             <div id="madrasnav" class="navbar-menu">
-            <div class="navbar-start">
-                <a class="navbar-item">
-                    Madras NFT
-                </a>
-        
-                <a class="navbar-item">
-                    Générateur
-                </a>
+                <div class="navbar-start">
+                    <a class="navbar-item">
+                        Madras NFT
+                    </a>
 
-                <a class="navbar-item">
-                    Hall Of Fame
-                </a>
+                    <a class="navbar-item">
+                        Générateur
+                    </a>
+
+                    <a class="navbar-item">
+                        Hall Of Fame
+                    </a>
+                </div>
             </div>
         </nav>
-        <div class="container"></div>
+        <div class="container" id="app">
             <section class="section">
                 <h1 class="title">Le Madras NFT</h1>
                 <h2 class="subtitle">
                     A simple container to divide your page into <strong>sections</strong>, like the one you're currently reading.
                 </h2>
             </section>
-
+            
             <section class="section">
                 <h1 class="title">Générateur</h1>
                 <h2 class="subtitle">
                     A simple container to divide your page into <strong>sections</strong>, like the one you're currently reading.
                 </h2>
                 <br/>
-                <div class="container" id="generator">
-                    <div class="columns">
-                        <div class="column">
-                            <div class="field">
-                                <label class="label">Nombre de bandes verticales</label>
-                                <div class="control">
-                                <input id="nb_bands_vertical" class="input" type="text" placeholder="Max..8">
-                                </div>
+                <div class="columns">
+                    <div class="column">
+                        <div class="field">
+                            <label class="label">Nombre de bandes verticales</label>
+                            <div class="control">
+                            <input id="nb_bands_vertical" class="input" type="text" placeholder="Max..8">
                             </div>
-                            <div class="field">
-                                <label class="label">Nombre de bandes horizontales</label>
-                                <div class="control">
-                                <input id="nb_bands_horizontal" class="input" type="text" placeholder="Max..8">
-                                </div>
+                        </div>
+                        <div class="field">
+                            <label class="label">Nombre de bandes horizontales</label>
+                            <div class="control">
+                            <input id="nb_bands_horizontal" class="input" type="text" placeholder="Max..8">
                             </div>
-                            <div class="field">
-                                <label class="label">Nombres de lignes verticales</label>
-                                <div class="control">
-                                <input id="nb_lines_vertical" class="input" type="text" placeholder="Max..20">
-                                </div>
+                        </div>
+                        <div class="field">
+                            <label class="label">Nombres de lignes verticales</label>
+                            <div class="control">
+                            <input id="nb_lines_vertical" class="input" type="text" placeholder="Max..20">
                             </div>
-                            <div class="field">
-                                <label class="label">Nombres de lignes horizontales</label>
-                                <div class="control">
-                                <input id="nb_lines_horizontal" class="input" type="text" placeholder="Max..20">
-                                </div>
+                        </div>
+                        <div class="field">
+                            <label class="label">Nombres de lignes horizontales</label>
+                            <div class="control">
+                            <input id="nb_lines_horizontal" class="input" type="text" placeholder="Max..20">
                             </div>
-                            <div class="field">
-                                <label class="label">Couleur du fond</label>
-                                <div class="control">
-                                    <div class="select">
-                                        <select id="background" v-model="default_color_background">
-                                            <option value="white">white</option>
-                                            <option value="yellow">yellow</option>
-                                            <option value="red">red</option>
-                                            <option value="blue">blue</option>
-                                            <option value="black">black</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <label class="label">Couleurs de bases</label>
-                            <div class="field has-addons">
-                                <div class="control">
-                                  <div class="select">
-                                    <select id="selectedColor" v-model="default_color">
+                        </div>
+                        <div class="field">
+                            <label class="label">Couleur du fond</label>
+                            <div class="control">
+                                <div class="select">
+                                    <select id="background" v-model="default_color_background">
+                                        <option value="white">white</option>
                                         <option value="yellow">yellow</option>
                                         <option value="red">red</option>
                                         <option value="blue">blue</option>
+                                        <option value="black">black</option>
                                     </select>
-                                  </div>
-                                </div>
-                                <div class="control">
-                                  <button type="submit" v-on:click="addNewColor()" class="button is-primary">Choose</button>
-                                </div>
-                            </div>
-                            <br/>
-                            <div class="container">
-                                <ul>
-                                    <li v-for="color in base_colors" >
-                                        <span class="tag">{{ color }}</span>
-                                    </li>
-                                </ul>
-                            </div>
-                            <br/>
-                            <div class="container">
-                                <div class="control">
-                                    <button type="submit" v-on:click="generate()" class="button is-primary">Submit</button>
                                 </div>
                             </div>
                         </div>
+                        <label class="label">Couleurs de bases</label>
+                        <div class="field has-addons">
+                            <div class="control">
+                            <div class="select">
+                                <select id="selectedColor" v-model="default_color">
+                                    <option value="yellow">yellow</option>
+                                    <option value="red">red</option>
+                                    <option value="blue">blue</option>
+                                </select>
+                            </div>
+                            </div>
+                            <div class="control">
+                            <button type="submit" v-on:click="addNewColor()" class="button is-primary">Choose</button>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="container">
+                            <ul>
+                                <li v-for="color in base_colors" >
+                                    <span class="tag">{{ color }}</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <br/>
+                        <div class="container">
+                            <div class="control">
+                                <button type="submit" v-on:click="generate()" class="button is-primary">Submit</button>
+                            </div>
+                        </div>
+                    </div>
 
-                        <div class="column">
-                            <div class="card">
-                                <div class="card-image">
-                                  <figure class="image is-4by3">
-                                    <img :src="current_madras_png" alt="Placeholder image">
-                                  </figure>
+                    <div class="column">
+                        <div class="card">
+                            <div class="card-image">
+                            <figure class="image is-4by3">
+                                <img :src="current_madras_png" alt="Placeholder image">
+                            </figure>
+                            </div>
+                            <div class="card-content">
+                                <div class="content">
+                                    {{ current_madras_data }}
                                 </div>
-                                <div class="card-content">
-                                    <div class="content">
-                                        {{ current_madras_data }}
+                            </div>
+                            <footer class="card-footer">
+                                <div class="card-footer-item field has-addons">
+                                    <div class="control is-expanded">
+                                    <input id="username" class="input" type="text" placeholder="Username..">
+                                    </div>
+                                    <div class="control">
+                                    <a type="submit" v-on:click="pin()" class="button is-info">Épingler
+                                    </a>
                                     </div>
                                 </div>
-                                <footer class="card-footer">
-                                    <a href="#" class="card-footer-item">Enregistrer</a>
-                                    <a href="#" class="card-footer-item">Épingler</a>
-                                  </footer>
-                            </div>
+                            </footer>
                         </div>
                     </div>
                 </div>
@@ -142,69 +148,72 @@
                 <h2 class="subtitle">
                     A simple container to divide your page into <strong>sections</strong>, like the one you're currently reading.
                 </h2>
-                <div id="halloffame">
-                    <div class="columns is-multiline">
-                        <div v-for="elem in favoris" class="column is-one-fifth">
-                            <div class="card">
-                                <div class="card-image">
-                                  <figure class="image is-4by3">
-                                    <img src="https://bulma.io/images/placeholders/1280x960.png" alt="Placeholder image">
-                                  </figure>
+                <div class="columns is-multiline">
+                    <div v-for="elem in favoris" class="column is-one-quarter">
+                        <div class="card">
+                            <div class="card-image">
+                            <figure class="image is-4by3">
+                                <img :src="png_get(elem.id)" alt="Placeholder image">
+                            </figure>
+                            </div>
+                            <div class="card-content">
+                            <div class="media">
+                                <div class="media-content">
+                                <p class="title is-4">John Smith</p>
+                                <p class="subtitle is-6">@johnsmith</p>
                                 </div>
-                                <div class="card-content">
-                                  <div class="media">
-                                    <div class="media-content">
-                                      <p class="title is-4">John Smith</p>
-                                      <p class="subtitle is-6">@johnsmith</p>
-                                    </div>
-                                  </div>
-                                  <div class="content">
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                                    Phasellus nec iaculis mauris. <a>@bulmaio</a>.
-                                    <a href="#">#css</a> <a href="#">#responsive</a>
-                                    <br>
-                                    <time datetime="2016-1-1">11:09 PM - 1 Jan 2016</time>
-                                  </div>
-                                  <footer class="card-footer">
-                                    <a href="#" class="card-footer-item">Upvote</a>
-                                  </footer>
-                                </div>
+                            </div>
+                            <div class="content">
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                                Phasellus nec iaculis mauris. <a>@bulmaio</a>.
+                                <a href="#">#css</a> <a href="#">#responsive</a>
+                                <br>
+                                <time datetime="2016-1-1">11:09 PM - 1 Jan 2016</time>
+                            </div>
+                            <footer class="card-footer">
+                                <button type="submit" v-on:click="upvote(elem.id)" class="button card-footer-item">Upvote</button>
+                            </footer>
                             </div>
                         </div>
                     </div>
                 </div>
             </section>
-
-            <footer class="footer">
-                <div class="content has-text-centered">
+        </div>    
+        <footer class="footer">
+            <div class="content has-text-centered">
                 <p>
                     <strong>Bulma</strong> by <a href="https://jgthms.com">Jeremy Thomas</a>. The source code is licensed
                     <a href="http://opensource.org/licenses/mit-license.php">MIT</a>. The website content
                     is licensed <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY NC SA 4.0</a>.
                 </p>
-                </div>
-            </footer>
-        </div>
+            </div>
+        </footer>
     </body>
 
     <script>
         var gen = new Vue({
-            el: '#generator',
+            el: '#app',
+
             data: {
                 default_color_background: 'white',
                 default_color: 'yellow',
                 base_colors: [],
                 current_madras_id: "",
                 current_madras_png: "https://bulma.io/images/placeholders/1280x960.png",
-                current_madras_data: {}
+                current_madras_data: {},
+                hall_of_fame: []
             },
+
+            created: function(){
+                this.hof();
+            },
+
             methods: {
                 addNewColor: function () {
-                this.base_colors.push(document.getElementById('selectedColor').value)
+                    this.base_colors.push(document.getElementById('selectedColor').value)
                 },
 
                 generate() {
-                const path = 'http://localhost:5000/generate';
                 payload = {
                     background: document.getElementById("background").value,
                     vertical_bands: document.getElementById("nb_bands_vertical").value,
@@ -213,44 +222,60 @@
                     horizontal_lines: document.getElementById("nb_lines_horizontal").value,
                     colors: this.base_colors.toString()
                 }
-                axios.get(path, {params: payload})
+                axios.get('http://localhost:5000/generate', {params: payload})
                 .then((res) => {
                     this.current_madras_id = res.data.id;
-                    axios.get('http://localhost:5000/png'.concat('/', this.current_madras_id))
-                    .then((respng) => {
-                        this.current_madras_png = respng.data
-                    })
-                    .catch((error) => {
-                    console.error(error);
-                    })
+                    this.current_madras_png = this.png_get(this.current_madras_id)
 
                     axios.get('http://localhost:5000/json'.concat('/', this.current_madras_id))
                     .then((resjson) => {
                         this.current_madras_data = resjson.data
+                    }).catch((error) => {
+                        console.error(error);
                     })
-                    .catch((error) => {
-                    console.error(error);
-                    })
-                })
-                .catch((error) => {
-                    console.error(error);
+                }).catch((error) => {
+                        console.error(error);
                     });
                 },
-                save_png() {},
 
-                pin() {}, 
+                pin() {
+                    axios.get('http://localhost:5000/pin'.concat('/', this.current_madras_id),
+                     {params: {username: document.getElementById('username').value}})
+                    .then((respng) => {
+                        this.hof();
+                    }).catch((error) => {
+                        console.error(error);
+                    })
+                },
 
-                upvote() {}
+                hof(){
+                    axios.get('http://localhost:5000/wall')
+                    .then((response) => {
+                        this.hall_of_fame = response.data.wall
+                    }).catch((error) => {
+                        console.error(error);
+                    })
+                },
 
-            }
-        });
+                upvote(id) {
+                    axios.get('http://localhost:5000/upvote'.concat('/', id))
+                    .then((resjson) => {
+                        this.hof();
+                    }).catch((error) => {
+                        console.error(error);
+                    })
+                },
 
-        var hof = new Vue({
-            el: '#halloffame',
-            computed: {
-                favoris: function (){
-                    return ['', '', '', '', '', '', '']
+                png_get: function(prop){
+                    return 'http://localhost:5000/images'.concat('/', prop)
                 }
+            },
+
+            computed: {
+
+                favoris: function (){
+                    return this.hall_of_fame;
+                },
             }
         });
     </script>

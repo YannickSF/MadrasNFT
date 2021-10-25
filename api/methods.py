@@ -30,8 +30,8 @@ def generator(**kwargs):
     for color in kwargs['colors']:
         palette.append(select_color_by_name(color))
 
-    filecount = len([name for name in os.listdir('_collections/')])
-    kwargs['name'] = '_collections/madrasnft_{}'.format(filecount)
+    filecount = len([name for name in os.listdir('static/')])
+    kwargs['name'] = 'madrasnft_{}'.format(filecount)
 
     madras_nft = MadrasNFT(name=kwargs['name'],
                            square_width=kwargs['square_width'], square_height=kwargs['square_height'],
@@ -46,28 +46,39 @@ def generator(**kwargs):
     return madras_rest
 
 
-def get_png(id):
+def get_png(id=None, name=None):
     q = Query()
-    robj = DB.search(q.id == id)
+    if id is not None:
+        robj = DB.search(q.id == id)
+    elif name is not None:
+        robj = DB.search(q.name == name)
+    else:
+        return None
+
     if len(robj) == 0:
         return {}
-    return MadrasRest(**robj[0]).png()
+    return MadrasRest(**robj[0]).png
 
 
-def get_json(id):
+def get_json(id=None, name=None):
     q = Query()
-    robj = DB.search(q.id == id)
+    if id is not None:
+        robj = DB.search(q.id == id)
+    elif name is not None:
+        robj = DB.search(q.name == name)
+    else:
+        return None
     if len(robj) == 0:
         return {}
 
     try:
-        with open(MadrasRest(**robj[0]).json(), 'r') as data:
+        with open(MadrasRest(**robj[0]).json, 'r') as data:
             return json.load(data)
     except Exception as e:
         return None
 
 
-def sobj_pin(id, username):
+def obj_pin(id, username):
     q = Query()
     robj = DB.search(q.id == id)
     if len(robj) == 0:

@@ -86,7 +86,7 @@ class MadrasNFT:
             self.update_img_matrix(self.draw_lines(None, p, color.shades[0]), color.shades[0])
 
         self.use_img_matrix()
-        self.image.save("{0}.png".format(self.name), "png")
+        self.image.save('static/{0}.png'.format(self.name), 'png')
 
     def show(self):
         self.image.show()
@@ -107,9 +107,8 @@ class MadrasNFT:
         return computed
 
     def create_json(self):
-        with io.open(os.path.join('{}.json'.format(self.name)), 'w') as db_file:
+        with io.open(os.path.join('static/{}.json'.format(self.name)), 'w') as db_file:
             payload = self.__repr__()
-            payload['name'] = payload['name'].split('/')[1]
             db_file.write(json.dumps(payload, indent=4))
             db_file.close()
 

@@ -13,15 +13,14 @@ class MadrasRest:
         self.username = '' if 'username' not in kwargs.keys() else kwargs['username']
         self.votes = 0 if 'votes' not in kwargs.keys() else kwargs['votes']
 
-    def png(self):
-        return self.name + '.png'
-
-    def json(self):
-        return self.name + '.json'
+        self.png = 'static/{}.png'.format(kwargs['name'])
+        self.json = 'static/{}.json'.format(kwargs['name'])
 
     def __repr__(self):
         return {'id': self.id,
                 'name': self.name,
+                'png': self.png,
+                'json': self.json,
                 'creation_date': self.creation_date,
                 'status': self.status,
                 'username': self.username,

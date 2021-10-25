@@ -16,7 +16,7 @@ def index():
 @app.route("/generate", methods=['GET'])
 def generate():
 
-    payload = {k: request.values[k] for k in request.values.keys()}
+    payload = {k: request.values[k] for k in request.values.keys() if 'responseType' not in k}
     payload['colors'] = payload['colors'].split(',')
 
     payload['square_width'] = 240
@@ -31,14 +31,14 @@ def generate():
     return {'id': obj_rest.id}
 
 
-@app.route("/png/<string:id>", methods=['GET'])
-def png(id):
-    return os.path.abspath(get_png(id))
+@app.route("/images/<string:id>", methods=['GET'])
+def image_by_id(id):
+    return send_file(get_png(id))
 
 
-@app.route("/save_png/<string:id>", methods=['GET'])
-def save_png(id):
-    return send_file(get_png(id), mimetype='image/png', as_attachment=True)
+@app.route("/images/<string:name>", methods=['GET'])
+def image_by_name(name):
+    return send_file(get_png(name))
 
 
 @app.route("/json/<string:id>", methods=['GET'])
@@ -48,7 +48,7 @@ def json(id):
 
 @app.route("/pin/<string:id>", methods=['GET'])
 def pin(id):
-    payload = request.get_json()
+    payload = {k: request.values[k] for k in request.values.keys()}
     return {'state': obj_pin(id, payload['username'])}
 
 
