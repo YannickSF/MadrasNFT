@@ -1,4 +1,4 @@
-import json
+
 import os
 import random
 from api.db import Table, Query
@@ -37,12 +37,10 @@ def generator(**kwargs):
                            square_width=kwargs['square_width'], square_height=kwargs['square_height'],
                            background=select_color_by_name(kwargs['background']),
                            palettes=palette)
-
     madras_nft.create_png(v_bands, h_bands, v_lines, h_lines)
-    madras_nft.create_json()
-
-    madras_rest = MadrasRest(name=madras_nft.name)
+    madras_rest = MadrasRest(name=madras_nft.name, extracted=madras_nft.__repr__())
     DB.insert(madras_rest.__repr__())
+
     return madras_rest
 
 
@@ -69,13 +67,9 @@ def get_json(id=None, name=None):
     else:
         return None
     if len(robj) == 0:
-        return {}
-
-    try:
-        with open(MadrasRest(**robj[0]).json, 'r') as data:
-            return json.load(data)
-    except Exception as e:
         return None
+
+    return MadrasRest(**robj[0]).extracted
 
 
 def obj_pin(id, username):

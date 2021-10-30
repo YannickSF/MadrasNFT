@@ -1,5 +1,4 @@
 
-import os
 from flask import Flask, request, send_file
 from flask_cors import CORS
 from api.methods import generator, get_json, get_png, obj_pin, obj_upvote, wall_of_fame

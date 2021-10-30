@@ -106,19 +106,14 @@ class MadrasNFT:
 
         return computed
 
-    def create_json(self):
-        with io.open(os.path.join('static/{}.json'.format(self.name)), 'w') as db_file:
-            payload = self.__repr__()
-            db_file.write(json.dumps(payload, indent=4))
-            db_file.close()
-
     def __repr__(self):
         return {'name': self.name,
                 'width': self.square_width,
                 'height': self.square_height,
                 'background': self.background.name,
                 'palette': [p.name for p in self.palettes],
-                'generated': self.compute_generated_shades()}
+                'brodery': self.compute_generated_shades(),
+                'rarity': ''}
 
     def __str__(self):
         return self.__repr__().__str__()

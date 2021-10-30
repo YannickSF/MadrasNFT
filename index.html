@@ -19,11 +19,7 @@
                     <a class="navbar-item">
                         Madras NFT
                     </a>
-
-                    <a class="navbar-item">
-                        Générateur
-                    </a>
-
+                    
                     <a class="navbar-item">
                         Hall Of Fame
                     </a>
@@ -32,122 +28,27 @@
         </nav>
         <div class="container" id="app">
             <section class="section">
-                <h1 class="title">Le Madras NFT</h1>
+                <h1 class="title">Mais Qu'est-ce que c'est ? </h1>
                 <h2 class="subtitle">
                     A simple container to divide your page into <strong>sections</strong>, like the one you're currently reading.
                 </h2>
+                <p>
+                    Donec eu sollicitudin erat. Mauris interdum arcu vel mauris iaculis, id iaculis felis tincidunt.
+                    Proin in nisl vulputate, porta ex a, elementum ex. Vestibulum mollis est nisl, sed tempus velit porta quis. 
+                    Vestibulum vehicula, dui non dapibus accumsan, lacus lectus blandit ex, eu rhoncus ante lorem id mi. 
+                    Mauris ac nisi eu velit porttitor hendrerit eget a velit. Nulla facilisi. Phasellus scelerisque blandit neque at ultricies. 
+                    Cras non velit velit. Pellentesque ullamcorper, elit consectetur suscipit eleifend, est enim varius ex, ut sodales nulla massa ut purus. 
+                    Nam vel libero sed lorem malesuada dignissim. 
+                </p>
             </section>
-            
+
             <section class="section">
-                <h1 class="title">Générateur</h1>
+                <h1 class="title">Collection #1</h1>
                 <h2 class="subtitle">
-                    A simple container to divide your page into <strong>sections</strong>, like the one you're currently reading.
+                    Voici la collection #1, onec id velit eu velit tempor condimentum. Aenean porta elit quis nulla facilisis auctor. Curabitur pharetra 
+                    ullamcorper porta. Donec molestie ex eu sodales consequat. Duis hendrerit pharetra nisi sed rutrum.
                 </h2>
                 <br/>
-                <div class="columns">
-                    <div class="column">
-                        <div class="field">
-                            <label class="label">Nombre de bandes verticales</label>
-                            <div class="control">
-                            <input id="nb_bands_vertical" class="input" type="text" placeholder="Max..8">
-                            </div>
-                        </div>
-                        <div class="field">
-                            <label class="label">Nombre de bandes horizontales</label>
-                            <div class="control">
-                            <input id="nb_bands_horizontal" class="input" type="text" placeholder="Max..8">
-                            </div>
-                        </div>
-                        <div class="field">
-                            <label class="label">Nombres de lignes verticales</label>
-                            <div class="control">
-                            <input id="nb_lines_vertical" class="input" type="text" placeholder="Max..20">
-                            </div>
-                        </div>
-                        <div class="field">
-                            <label class="label">Nombres de lignes horizontales</label>
-                            <div class="control">
-                            <input id="nb_lines_horizontal" class="input" type="text" placeholder="Max..20">
-                            </div>
-                        </div>
-                        <div class="field">
-                            <label class="label">Couleur du fond</label>
-                            <div class="control">
-                                <div class="select">
-                                    <select id="background" v-model="default_color_background">
-                                        <option value="white">white</option>
-                                        <option value="yellow">yellow</option>
-                                        <option value="red">red</option>
-                                        <option value="blue">blue</option>
-                                        <option value="black">black</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <label class="label">Couleurs de bases</label>
-                        <div class="field has-addons">
-                            <div class="control">
-                            <div class="select">
-                                <select id="selectedColor" v-model="default_color">
-                                    <option value="yellow">yellow</option>
-                                    <option value="red">red</option>
-                                    <option value="blue">blue</option>
-                                </select>
-                            </div>
-                            </div>
-                            <div class="control">
-                            <button type="submit" v-on:click="addNewColor()" class="button is-primary">Choose</button>
-                            </div>
-                        </div>
-                        <br/>
-                        <div class="container">
-                            <ul>
-                                <li v-for="color in base_colors" >
-                                    <span class="tag">{{ color }}</span>
-                                </li>
-                            </ul>
-                        </div>
-                        <br/>
-                        <div class="container">
-                            <div class="control">
-                                <button type="submit" v-on:click="generate()" class="button is-primary">Submit</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="column">
-                        <div class="card">
-                            <div class="card-image">
-                            <figure class="image is-4by3">
-                                <img :src="current_madras_png" alt="Placeholder image">
-                            </figure>
-                            </div>
-                            <div class="card-content">
-                                <div class="content">
-                                    {{ current_madras_data }}
-                                </div>
-                            </div>
-                            <footer class="card-footer">
-                                <div class="card-footer-item field has-addons">
-                                    <div class="control is-expanded">
-                                    <input id="username" class="input" type="text" placeholder="Username..">
-                                    </div>
-                                    <div class="control">
-                                    <a type="submit" v-on:click="pin()" class="button is-info">Épingler
-                                    </a>
-                                    </div>
-                                </div>
-                            </footer>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <section class="section">
-                <h1 class="title">Hall Of Fame</h1>
-                <h2 class="subtitle">
-                    A simple container to divide your page into <strong>sections</strong>, like the one you're currently reading.
-                </h2>
                 <div class="columns is-multiline">
                     <div v-for="elem in favoris" class="column is-one-quarter">
                         <div class="card">
@@ -159,16 +60,18 @@
                             <div class="card-content">
                             <div class="media">
                                 <div class="media-content">
-                                <p class="title is-4">John Smith</p>
-                                <p class="subtitle is-6">@johnsmith</p>
+                                <p class="title is-4">{{ elem.username }}</p>
+                                <p class="subtitle is-6">{{ elem.name }}</p>
                                 </div>
                             </div>
                             <div class="content">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                                Phasellus nec iaculis mauris. <a>@bulmaio</a>.
-                                <a href="#">#css</a> <a href="#">#responsive</a>
-                                <br>
-                                <time datetime="2016-1-1">11:09 PM - 1 Jan 2016</time>
+                                <ul>
+                                    <li>Rarity : {{ elem.extracted.rarity }}</li>
+                                    <li>Extracted : </li>
+                                        <ul>
+                                            <li v-for="key in Object.entries(elem.extracted.brodery)"> {{ key }}</li>
+                                        </ul>
+                                </ul>
                             </div>
                             <footer class="card-footer">
                                 <button type="submit" v-on:click="upvote(elem.id)" class="button card-footer-item">Upvote</button>
@@ -182,9 +85,10 @@
         <footer class="footer">
             <div class="content has-text-centered">
                 <p>
-                    <strong>Bulma</strong> by <a href="https://jgthms.com">Jeremy Thomas</a>. The source code is licensed
-                    <a href="http://opensource.org/licenses/mit-license.php">MIT</a>. The website content
-                    is licensed <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY NC SA 4.0</a>.
+                    <strong>MadrasNFT</strong> powered by <a href="https://yannicksf.xyz">Yannick S. F</a> 
+                    <br/>
+                    The source code is licensed <a href="http://opensource.org/licenses/mit-license.php">MIT</a>. The website content
+                    is licensed is All Right Reserved.
                 </p>
             </div>
         </footer>
@@ -195,13 +99,8 @@
             el: '#app',
 
             data: {
-                default_color_background: 'white',
-                default_color: 'yellow',
-                base_colors: [],
-                current_madras_id: "",
-                current_madras_png: "https://bulma.io/images/placeholders/1280x960.png",
-                current_madras_data: {},
-                hall_of_fame: []
+                hall_of_fame: [],
+                selectedJson: {}
             },
 
             created: function(){
@@ -209,44 +108,6 @@
             },
 
             methods: {
-                addNewColor: function () {
-                    this.base_colors.push(document.getElementById('selectedColor').value)
-                },
-
-                generate() {
-                payload = {
-                    background: document.getElementById("background").value,
-                    vertical_bands: document.getElementById("nb_bands_vertical").value,
-                    horizontal_bands: document.getElementById("nb_bands_horizontal").value,
-                    vertical_lines: document.getElementById("nb_lines_vertical").value,
-                    horizontal_lines: document.getElementById("nb_lines_horizontal").value,
-                    colors: this.base_colors.toString()
-                }
-                axios.get('http://localhost:5000/generate', {params: payload})
-                .then((res) => {
-                    this.current_madras_id = res.data.id;
-                    this.current_madras_png = this.png_get(this.current_madras_id)
-
-                    axios.get('http://localhost:5000/json'.concat('/', this.current_madras_id))
-                    .then((resjson) => {
-                        this.current_madras_data = resjson.data
-                    }).catch((error) => {
-                        console.error(error);
-                    })
-                }).catch((error) => {
-                        console.error(error);
-                    });
-                },
-
-                pin() {
-                    axios.get('http://localhost:5000/pin'.concat('/', this.current_madras_id),
-                     {params: {username: document.getElementById('username').value}})
-                    .then((respng) => {
-                        this.hof();
-                    }).catch((error) => {
-                        console.error(error);
-                    })
-                },
 
                 hof(){
                     axios.get('http://localhost:5000/wall')

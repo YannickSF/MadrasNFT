@@ -14,17 +14,17 @@ class MadrasRest:
         self.votes = 0 if 'votes' not in kwargs.keys() else kwargs['votes']
 
         self.png = 'static/{}.png'.format(kwargs['name'])
-        self.json = 'static/{}.json'.format(kwargs['name'])
+        self.extracted = kwargs['extracted']
 
     def __repr__(self):
         return {'id': self.id,
                 'name': self.name,
                 'png': self.png,
-                'json': self.json,
                 'creation_date': self.creation_date,
                 'status': self.status,
                 'username': self.username,
-                'votes': self.votes}
+                'votes': self.votes,
+                'extracted': self.extracted}
 
     def __str__(self):
         return self.__repr__().__str__()
