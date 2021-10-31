@@ -112,8 +112,7 @@ class MadrasNFT:
                 'height': self.square_height,
                 'background': self.background.name,
                 'palette': [p.name for p in self.palettes],
-                'brodery': self.compute_generated_shades(),
-                'rarity': ''}
+                'created': self.compute_generated_shades()}
 
     def __str__(self):
         return self.__repr__().__str__()

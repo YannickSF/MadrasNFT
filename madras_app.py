@@ -1,7 +1,7 @@
 
 from flask import Flask, request, send_file
 from flask_cors import CORS
-from api.methods import generator, get_json, get_png, obj_pin, obj_upvote, wall_of_fame
+from api.methods import generator, item_by_id, get_png, obj_pin, wall_of_fame
 
 app = Flask(__name__)
 cors = CORS(app)
@@ -18,8 +18,8 @@ def generate():
     payload = {k: request.values[k] for k in request.values.keys() if 'responseType' not in k}
     payload['colors'] = payload['colors'].split(',')
 
-    payload['square_width'] = 240
-    payload['square_height'] = 240
+    payload['square_width'] = 480
+    payload['square_height'] = 480
 
     obj_rest = None
     try:
@@ -35,25 +35,15 @@ def image_by_id(id):
     return send_file(get_png(id))
 
 
-@app.route("/images/<string:name>", methods=['GET'])
-def image_by_name(name):
-    return send_file(get_png(name))
-
-
-@app.route("/json/<string:id>", methods=['GET'])
-def json(id):
-    return get_json(id)
+@app.route("/item/<string:id>", methods=['GET'])
+def item(id):
+    return {'item': item_by_id(id).__repr__()}
 
 
 @app.route("/pin/<string:id>", methods=['GET'])
 def pin(id):
     payload = {k: request.values[k] for k in request.values.keys()}
     return {'state': obj_pin(id, payload['username'])}
-
-
-@app.route("/upvote/<string:id>", methods=['GET'])
-def upvote(id):
-    return {'state': obj_upvote(id)}
 
 
 @app.route("/wall", methods=['GET'])

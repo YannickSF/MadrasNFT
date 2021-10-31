@@ -2,55 +2,16 @@
     <html lang="fr">
     <head>
         <meta charset="UTF-8">
-        <title>Madras NFT</title>
+        <title>Collection</title>
         <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
     </head>
     <body>
-        <nav class="navbar is-warning" role="navigation" aria-label="main navigation">          
-            <div class="navbar-brand">
-                <a class="navbar-item" href="https://bulma.io">
-                <img src="https://bulma.io/images/bulma-logo.png" width="112" height="28">
-                </a>
-            </div>
-            <div id="madrasnav" class="navbar-menu">
-                <div class="navbar-start">
-                    <a class="navbar-item">
-                        Madras NFT
-                    </a>
-                    
-                    <a class="navbar-item">
-                        Hall Of Fame
-                    </a>
-                </div>
-            </div>
-        </nav>
         <div class="container" id="app">
             <section class="section">
-                <h1 class="title">Mais Qu'est-ce que c'est ? </h1>
-                <h2 class="subtitle">
-                    A simple container to divide your page into <strong>sections</strong>, like the one you're currently reading.
-                </h2>
-                <p>
-                    Donec eu sollicitudin erat. Mauris interdum arcu vel mauris iaculis, id iaculis felis tincidunt.
-                    Proin in nisl vulputate, porta ex a, elementum ex. Vestibulum mollis est nisl, sed tempus velit porta quis. 
-                    Vestibulum vehicula, dui non dapibus accumsan, lacus lectus blandit ex, eu rhoncus ante lorem id mi. 
-                    Mauris ac nisi eu velit porttitor hendrerit eget a velit. Nulla facilisi. Phasellus scelerisque blandit neque at ultricies. 
-                    Cras non velit velit. Pellentesque ullamcorper, elit consectetur suscipit eleifend, est enim varius ex, ut sodales nulla massa ut purus. 
-                    Nam vel libero sed lorem malesuada dignissim. 
-                </p>
-            </section>
-
-            <section class="section">
-                <h1 class="title">Collection #1</h1>
-                <h2 class="subtitle">
-                    Voici la collection #1, onec id velit eu velit tempor condimentum. Aenean porta elit quis nulla facilisis auctor. Curabitur pharetra 
-                    ullamcorper porta. Donec molestie ex eu sodales consequat. Duis hendrerit pharetra nisi sed rutrum.
-                </h2>
-                <br/>
                 <div class="columns is-multiline">
-                    <div v-for="elem in favoris" class="column is-one-quarter">
+                    <div v-for="elem in favoris" class="column is-one-fifth">
                         <div class="card">
                             <div class="card-image">
                             <figure class="image is-4by3">
@@ -65,12 +26,9 @@
                                 </div>
                             </div>
                             <div class="content">
+                                <p>Extracted : </p>
                                 <ul>
-                                    <li>Rarity : {{ elem.extracted.rarity }}</li>
-                                    <li>Extracted : </li>
-                                        <ul>
-                                            <li v-for="key in Object.entries(elem.extracted.brodery)"> {{ key }}</li>
-                                        </ul>
+                                    <li v-for="key in Object.entries(elem.extracted.created)"> {{ key }}</li>
                                 </ul>
                             </div>
                             <footer class="card-footer">
@@ -82,16 +40,6 @@
                 </div>
             </section>
         </div>    
-        <footer class="footer">
-            <div class="content has-text-centered">
-                <p>
-                    <strong>MadrasNFT</strong> powered by <a href="https://yannicksf.xyz">Yannick S. F</a> 
-                    <br/>
-                    The source code is licensed <a href="http://opensource.org/licenses/mit-license.php">MIT</a>. The website content
-                    is licensed is All Right Reserved.
-                </p>
-            </div>
-        </footer>
     </body>
 
     <script>

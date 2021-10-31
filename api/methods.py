@@ -32,6 +32,7 @@ def generator(**kwargs):
 
     filecount = len([name for name in os.listdir('static/')])
     kwargs['name'] = 'madrasnft_{}'.format(filecount)
+    print(kwargs['name'])
 
     madras_nft = MadrasNFT(name=kwargs['name'],
                            square_width=kwargs['square_width'], square_height=kwargs['square_height'],
@@ -42,6 +43,14 @@ def generator(**kwargs):
     DB.insert(madras_rest.__repr__())
 
     return madras_rest
+
+
+def item_by_id(id):
+    q = Query()
+    robj = DB.search(q.id == id)
+    if len(robj) == 0:
+        return {}
+    return MadrasRest(**robj[0])
 
 
 def get_png(id=None, name=None):
@@ -58,20 +67,6 @@ def get_png(id=None, name=None):
     return MadrasRest(**robj[0]).png
 
 
-def get_json(id=None, name=None):
-    q = Query()
-    if id is not None:
-        robj = DB.search(q.id == id)
-    elif name is not None:
-        robj = DB.search(q.name == name)
-    else:
-        return None
-    if len(robj) == 0:
-        return None
-
-    return MadrasRest(**robj[0]).extracted
-
-
 def obj_pin(id, username):
     q = Query()
     robj = DB.search(q.id == id)
@@ -81,18 +76,6 @@ def obj_pin(id, username):
     mr = MadrasRest(**robj[0])
     mr.username = username
     mr.status = 'pin'
-    DB.update(mr.__repr__(), q.id == id)
-    return True
-
-
-def obj_upvote(id):
-    q = Query()
-    robj = DB.search(q.id == id)
-    if len(robj) == 0:
-        return {}
-
-    mr = MadrasRest(**robj[0])
-    mr.votes += 1
     DB.update(mr.__repr__(), q.id == id)
     return True
 

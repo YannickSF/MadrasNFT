@@ -15,11 +15,13 @@ class MadrasRest:
 
         self.png = 'static/{}.png'.format(kwargs['name'])
         self.extracted = kwargs['extracted']
+        self.url = '' if 'url' not in kwargs.keys() else kwargs['url']
 
     def __repr__(self):
         return {'id': self.id,
                 'name': self.name,
                 'png': self.png,
+                'url': self.url,
                 'creation_date': self.creation_date,
                 'status': self.status,
                 'username': self.username,

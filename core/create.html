@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Create Madras NFT</title>
+    <title>Create</title>
     <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
@@ -92,7 +92,7 @@
                         </div>
                         <div class="card-content">
                             <div class="content">
-                                {{ current_madras_data }}
+                                {{ current_madras_data.extracted }}
                             </div>
                         </div>
                         <footer class="card-footer">
@@ -126,37 +126,33 @@
             hall_of_fame: []
         },
 
-        created: function(){
-            this.hof();
-        },
-
         methods: {
             addNewColor: function () {
                 this.base_colors.push(document.getElementById('selectedColor').value)
             },
 
             generate() {
-            payload = {
-                background: document.getElementById("background").value,
-                vertical_bands: document.getElementById("nb_bands_vertical").value,
-                horizontal_bands: document.getElementById("nb_bands_horizontal").value,
-                vertical_lines: document.getElementById("nb_lines_vertical").value,
-                horizontal_lines: document.getElementById("nb_lines_horizontal").value,
-                colors: this.base_colors.toString()
-            }
-            axios.get('http://localhost:5000/generate', {params: payload})
-            .then((res) => {
-                this.current_madras_id = res.data.id;
-                this.current_madras_png = this.png_get(this.current_madras_id)
+                payload = {
+                    background: document.getElementById("background").value,
+                    vertical_bands: document.getElementById("nb_bands_vertical").value,
+                    horizontal_bands: document.getElementById("nb_bands_horizontal").value,
+                    vertical_lines: document.getElementById("nb_lines_vertical").value,
+                    horizontal_lines: document.getElementById("nb_lines_horizontal").value,
+                    colors: this.base_colors.toString()
+                }
+                axios.get('http://localhost:5000/generate', {params: payload})
+                .then((res) => {
+                    this.current_madras_id = res.data.id;
+                    this.current_madras_png = this.png_get(this.current_madras_id)
 
-                axios.get('http://localhost:5000/json'.concat('/', this.current_madras_id))
-                .then((resjson) => {
-                    this.current_madras_data = resjson.data
+                    axios.get('http://localhost:5000/item'.concat('/', this.current_madras_id))
+                    .then((resjson) => {
+                        this.current_madras_data = resjson.data.item
+                    }).catch((error) => {
+                        console.error(error);
+                    })
                 }).catch((error) => {
-                    console.error(error);
-                })
-            }).catch((error) => {
-                    console.error(error);
+                        console.error(error);
                 });
             },
 
@@ -164,25 +160,6 @@
                 axios.get('http://localhost:5000/pin'.concat('/', this.current_madras_id),
                  {params: {username: document.getElementById('username').value}})
                 .then((respng) => {
-                    this.hof();
-                }).catch((error) => {
-                    console.error(error);
-                })
-            },
-
-            hof(){
-                axios.get('http://localhost:5000/wall')
-                .then((response) => {
-                    this.hall_of_fame = response.data.wall
-                }).catch((error) => {
-                    console.error(error);
-                })
-            },
-
-            upvote(id) {
-                axios.get('http://localhost:5000/upvote'.concat('/', id))
-                .then((resjson) => {
-                    this.hof();
                 }).catch((error) => {
                     console.error(error);
                 })
@@ -191,13 +168,6 @@
             png_get: function(prop){
                 return 'http://localhost:5000/images'.concat('/', prop)
             }
-        },
-
-        computed: {
-
-            favoris: function (){
-                return this.hall_of_fame;
-            },
         }
     });
 </script>
