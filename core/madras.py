@@ -1,7 +1,10 @@
 
+import io
+import json
+import os
 import random
 from PIL import Image, ImageDraw
-from colors import *
+from core.colors import *
 
 
 class MadrasNFT:
@@ -61,7 +64,7 @@ class MadrasNFT:
             for b in range(self.square_height):
                 self.image.putpixel((a, b), self.img_matrix[a, b])
 
-    def create(self, *args):
+    def create_png(self, *args):
         # v bands
         for m in args[0]:
             color = random.choice(self.palettes)
@@ -83,7 +86,7 @@ class MadrasNFT:
             self.update_img_matrix(self.draw_lines(None, p, color.shades[0]), color.shades[0])
 
         self.use_img_matrix()
-        self.image.save("{0}.png".format(self.name), "png")
+        self.image.save('static/{0}.png'.format(self.name), 'png')
 
     def show(self):
         self.image.show()
@@ -109,7 +112,7 @@ class MadrasNFT:
                 'height': self.square_height,
                 'background': self.background.name,
                 'palette': [p.name for p in self.palettes],
-                'generated': self.compute_generated_shades()}
+                'created': self.compute_generated_shades()}
 
     def __str__(self):
         return self.__repr__().__str__()

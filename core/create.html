@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+</head>
+<body>
+    <div class="container" id="app">
+        <section class="section">
+            <h1 class="title">Générateur</h1>
+            <br/>
+            <div class="columns">
+                <div class="column">
+                    <div class="field">
+                        <label class="label">Nombre de bandes verticales</label>
+                        <div class="control">
+                        <input id="nb_bands_vertical" class="input" type="text" placeholder="Max..8">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="label">Nombre de bandes horizontales</label>
+                        <div class="control">
+                        <input id="nb_bands_horizontal" class="input" type="text" placeholder="Max..8">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="label">Nombres de lignes verticales</label>
+                        <div class="control">
+                        <input id="nb_lines_vertical" class="input" type="text" placeholder="Max..20">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="label">Nombres de lignes horizontales</label>
+                        <div class="control">
+                        <input id="nb_lines_horizontal" class="input" type="text" placeholder="Max..20">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="label">Couleur du fond</label>
+                        <div class="control">
+                            <div class="select">
+                                <select id="background" v-model="default_color_background">
+                                    <option value="white">white</option>
+                                    <option value="yellow">yellow</option>
+                                    <option value="red">red</option>
+                                    <option value="blue">blue</option>
+                                    <option value="black">black</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <label class="label">Couleurs de bases</label>
+                    <div class="field has-addons">
+                        <div class="control">
+                        <div class="select">
+                            <select id="selectedColor" v-model="default_color">
+                                <option value="yellow">yellow</option>
+                                <option value="red">red</option>
+                                <option value="blue">blue</option>
+                            </select>
+                        </div>
+                        </div>
+                        <div class="control">
+                        <button type="submit" v-on:click="addNewColor()" class="button is-primary">Choose</button>
+                        </div>
+                    </div>
+                    <br/>
+                    <div class="container">
+                        <ul>
+                            <li v-for="color in base_colors" >
+                                <span class="tag">{{ color }}</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <br/>
+                    <div class="container">
+                        <div class="control">
+                            <button type="submit" v-on:click="generate()" class="button is-primary">Submit</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="column">
+                    <div class="card">
+                        <div class="card-image">
+                        <figure class="image is-4by3">
+                            <img :src="current_madras_png" alt="Placeholder image">
+                        </figure>
+                        </div>
+                        <div class="card-content">
+                            <div class="content">
+                                {{ current_madras_data.extracted }}
+                            </div>
+                        </div>
+                        <footer class="card-footer">
+                            <div class="card-footer-item field has-addons">
+                                <div class="control is-expanded">
+                                <input id="username" class="input" type="text" placeholder="Username..">
+                                </div>
+                                <div class="control">
+                                <a type="submit" v-on:click="pin()" class="button is-info">Épingler
+                                </a>
+                                </div>
+                            </div>
+                        </footer>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</body>
+<script>
+    var gen = new Vue({
+        el: '#app',
+
+        data: {
+            default_color_background: 'white',
+            default_color: 'yellow',
+            base_colors: [],
+            current_madras_id: "",
+            current_madras_png: "https://bulma.io/images/placeholders/1280x960.png",
+            current_madras_data: {},
+            hall_of_fame: []
+        },
+
+        methods: {
+            addNewColor: function () {
+                this.base_colors.push(document.getElementById('selectedColor').value)
+            },
+
+            generate() {
+                payload = {
+                    background: document.getElementById("background").value,
+                    vertical_bands: document.getElementById("nb_bands_vertical").value,
+                    horizontal_bands: document.getElementById("nb_bands_horizontal").value,
+                    vertical_lines: document.getElementById("nb_lines_vertical").value,
+                    horizontal_lines: document.getElementById("nb_lines_horizontal").value,
+                    colors: this.base_colors.toString()
+                }
+                axios.get('http://localhost:5000/generate', {params: payload})
+                .then((res) => {
+                    this.current_madras_id = res.data.id;
+                    this.current_madras_png = this.png_get(this.current_madras_id)
+
+                    axios.get('http://localhost:5000/item'.concat('/', this.current_madras_id))
+                    .then((resjson) => {
+                        this.current_madras_data = resjson.data.item
+                    }).catch((error) => {
+                        console.error(error);
+                    })
+                }).catch((error) => {
+                        console.error(error);
+                });
+            },
+
+            pin() {
+                axios.get('http://localhost:5000/pin'.concat('/', this.current_madras_id),
+                 {params: {username: document.getElementById('username').value}})
+                .then((respng) => {
+                }).catch((error) => {
+                    console.error(error);
+                })
+            },
+
+            png_get: function(prop){
+                return 'http://localhost:5000/images'.concat('/', prop)
+            }
+        }
+    });
+</script>
+</html>
